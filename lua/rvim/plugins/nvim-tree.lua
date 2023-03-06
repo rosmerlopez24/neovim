@@ -1,0 +1,81 @@
+return {
+  "nvim-tree/nvim-tree.lua",
+  lazy = true,
+  opts = {
+    auto_reload_on_write = true,
+    disable_netrw = true,
+    hijack_cursor = true,
+    hijack_netrw = true,
+    hijack_unnamed_buffer_when_opening = false,
+    view = {
+      adaptive_size = true,
+      centralize_selection = true,
+      width = 30,
+      hide_root_folder = true,
+      side = "left",
+      preserve_window_proportions = false,
+      number = false,
+      relativenumber = false,
+      signcolumn = "yes",
+    },
+    renderer = {
+      add_trailing = false,
+      group_empty = false,
+      highlight_git = false,
+      full_name = false,
+      highlight_opened_files = "name",
+      root_folder_modifier = ":~",
+      indent_width = 2,
+      indent_markers = {
+        enable = true,
+        inline_arrows = true,
+        icons = {
+          corner = "└",
+          edge = "│",
+          item = "│",
+          none = " ",
+        },
+      },
+      icons = {
+        webdev_colors = true,
+        git_placement = "before",
+        padding = " ",
+        symlink_arrow = " ➛ ",
+        show = {
+          file = true,
+          folder = true,
+          folder_arrow = true,
+          git = false,
+        },
+        glyphs = {
+          default = "",
+          symlink = "",
+          bookmark = "",
+          folder = {
+            arrow_open = "",
+            arrow_closed = "",
+            default = "",
+            open = "",
+            empty = "",
+            empty_open = "",
+            symlink = "",
+            symlink_open = "",
+          },
+        },
+      },
+    },
+    update_focused_file = {
+      enable = true,
+      update_root = false,
+    },
+    git = { enable = false },
+    actions = { open_file = { resize_window = true } },
+  },
+  config = function(_, opts)
+    require("nvim-tree").setup(opts)
+  end,
+  cmd = "NvimTreeToggle",
+  keys = {
+    { "<leader>e", "<cmd>NvimTreeToggle<CR>" },
+  },
+}
