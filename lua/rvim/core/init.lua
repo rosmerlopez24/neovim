@@ -7,7 +7,7 @@ function M.setup()
   Config = vim.deepcopy(require("rvim.config.defaults"))
 
   -- Try load user config based on default config
-  local present, _ = pcall(require, "rvim.config.config")
+  local present, _ = pcall(require, "rvim.config")
   if not present then
     vim.notify("Don't loaded user config!", vim.log.levels.INFO)
   end
