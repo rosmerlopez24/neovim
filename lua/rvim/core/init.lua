@@ -20,6 +20,20 @@ function M.setup()
   require("rvim.core.keymaps")
   -- Setup plugins manager
   require("rvim.core.lazy")
+
+  -- Setup colorscheme
+  require("lazy.core.util").try(function()
+    if Config.colorscheme == "material" then
+      vim.g.material_style = Config.style
+    end
+    vim.cmd.colorscheme(Config.colorscheme)
+  end, {
+    msg = "Could not load your colorscheme",
+    on_error = function(msg)
+      require("lazy.core.util").error(msg)
+      vim.cmd.colorscheme("habamax")
+    end,
+  })
 end
 
 return M

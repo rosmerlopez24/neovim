@@ -4,7 +4,6 @@ local M = {}
 ---@return nil
 function M.setup()
   require("rvim.core").setup()
-  require("rvim.util.themes").setup()
 end
 
 return M
