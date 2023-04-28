@@ -1,9 +1,9 @@
+---@type RVConfig
 local M = {}
 
--- Setup Configurations
----@return nil
+---@type fun():nil
 function M.setup()
-  -- Setup default config
+  ---@type RVConfig
   Config = vim.deepcopy(require("rvim.config.defaults"))
 
   -- Try load user config based on default config

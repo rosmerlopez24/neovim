@@ -1,4 +1,5 @@
-return {
+---@class RVConfig
+local defaults = {
   -- General settings
   -- Border Win
   -- See :h nvim_open_win for possible border options
@@ -80,3 +81,5 @@ return {
   -- LSP Server Settings
   servers = {},
 }
+
+return defaults
