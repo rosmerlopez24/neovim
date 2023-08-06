@@ -191,9 +191,9 @@ return {
             folder = {
               arrow_open = "",
               arrow_closed = "",
-              default = "",
-              open = "",
-              empty = "",
+              default = "",
+              open = "",
+              empty = "",
               empty_open = "",
               symlink = "",
               symlink_open = "",
