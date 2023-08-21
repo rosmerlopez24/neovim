@@ -1,1 +1,1 @@
-require("rvim").setup() -- Iniatialize setup for Neovim
+require("rvim") -- Initialization of Configurations

@@ -1,4 +1,5 @@
-return {
+---@class RVConfig
+local defaults = {
   -- General settings
   -- Border Win
   -- See :h nvim_open_win for possible border options
@@ -10,6 +11,7 @@ return {
   -- catppuccin: latte, frappe, macchiato, mocha
   -- material: darker, lighter, oceanic, palenight, deep ocean
   -- tokyonight: storm, moon, night, day
+  -- bluloco: dark, light
   style = "deep ocean",
 
   -- Treesitter - Syntax highlighting
@@ -17,12 +19,14 @@ return {
   plugins = {
     treesitter = {
       -- A list of parser names, or "all" (the five listed parsers should always be installed)
-      ensure_installed = { "lua", "vim", "help" },
+      ensure_installed = {},
+      -- Install parsers synchronously (only applied to `ensure_installed`)
+      sync_install = false,
       -- Automatically install missing parsers when entering buffer
       -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-      auto_install = true,
+      auto_install = false,
       -- List of parsers to ignore installing (for "all")
-      ignore_install = { "javascript" },
+      ignore_install = {},
     },
   },
 
@@ -80,3 +84,5 @@ return {
   -- LSP Server Settings
   servers = {},
 }
+
+return defaults
