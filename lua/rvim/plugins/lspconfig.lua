@@ -8,7 +8,6 @@ return {
       "williamboman/mason-lspconfig.nvim",
       "neodev.nvim",
       "barbecue.nvim",
-      "clangd_extensions.nvim",
     },
     config = function()
       require("rvim.lsp").setup_diagnostics()
