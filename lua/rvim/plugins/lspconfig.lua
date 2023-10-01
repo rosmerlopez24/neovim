@@ -2,7 +2,6 @@ return {
   -- Quickstart configurations for the LSP client.
   {
     "neovim/nvim-lspconfig",
-    event = "BufReadPre",
     dependencies = {
       "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
@@ -34,6 +33,7 @@ return {
         end
       end)
     end,
+    event = { "BufRead" },
   },
 
   -- Portable package manager that runs everywhere Neovim runs. Easily install and manage LSP servers, DAP servers, linters, and formatters.
@@ -61,7 +61,7 @@ return {
     config = function(_, opts)
       require("mason").setup(opts)
     end,
-    cmd = "Mason",
+    cmd = { "Mason" },
     keys = { { "<leader>cm", "<cmd>Mason<cr>" } },
   },
 
