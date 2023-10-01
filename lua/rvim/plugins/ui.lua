@@ -128,7 +128,7 @@ return {
       require("lualine").setup(opts)
       vim.opt.laststatus = 3
     end,
-    event = "BufReadPost",
+    event = { "BufRead" },
   },
 
   -- A simple and fast file explorer tree.
@@ -144,8 +144,7 @@ return {
       view = {
         centralize_selection = true,
         cursorline = true,
-        width = { min = 30, max = -1, padding = 1 },
-        hide_root_folder = false,
+        width = 30,
         side = "left",
         preserve_window_proportions = false,
         number = false,
@@ -257,19 +256,12 @@ return {
   {
     "lukas-reineke/indent-blankline.nvim",
     lazy = true,
-    opts = {
-      char = "│",
-      filetype_exclude = { "help", "terminal", "alpha", "lazy", "NvimTree", "mason", "noice" },
-      buftype_exclude = { "terminal" },
-      show_trailing_blankline_indent = false,
-      show_first_indent_level = false,
-      show_current_context = true,
-      show_current_context_start = true,
-    },
+    main = "ibl",
+    opts = {},
     config = function(_, opts)
-      require("indent_blankline").setup(opts)
+      require("ibl").setup(opts)
     end,
-    event = "BufReadPost",
+    event = { "BufRead" },
   },
 
   -- A Lua fork of vim-devicons.

@@ -78,7 +78,7 @@ return {
     config = function(_, opts)
       require("cmp").setup(opts)
     end,
-    event = "InsertEnter",
+    event = { "InsertEnter" },
   },
 
   -- A snippet engine written in Lua.
@@ -114,6 +114,6 @@ return {
       cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
       cmp.event:off("confirm_done", cmp_autopairs.on_confirm_done())
     end,
-    event = "InsertEnter",
+    event = { "InsertEnter" },
   },
 }

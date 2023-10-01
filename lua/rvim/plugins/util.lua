@@ -33,7 +33,7 @@ return {
     config = function(_, opts)
       require("colorizer").setup(opts)
     end,
-    event = "BufReadPost",
+    event = { "BufRead" },
   },
 
   -- Git integration: signs, hunk actions, blame, etc.
@@ -56,7 +56,7 @@ return {
     config = function(_, opts)
       require("gitsigns").setup(opts)
     end,
-    event = "BufReadPost",
+    event = { "BufRead" },
   },
 
   -- A format runner written in Lua.
@@ -98,7 +98,7 @@ return {
         },
       })
     end,
-    event = "BufReadPost",
+    event = { "BufRead" },
   },
 
   -- Preview markdown in a webview window.
@@ -126,6 +126,6 @@ return {
       vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
       vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
     end,
-    cmd = "PeekOpen",
+    cmd = { "PeekOpen" },
   },
 }
