@@ -3,7 +3,6 @@ return {
   lazy = true,
   version = false, -- Last release is way too old and doesn't work on Windows
   build = ":TSUpdate",
-  ---@type TSConfig
   opts = {
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
     ensure_installed = Config.plugins.treesitter.ensure_installed,
@@ -18,9 +17,8 @@ return {
     indent = { enable = true },
     incremental_selection = { enable = false },
   },
-  ---@param opts TSConfig
   config = function(_, opts)
     require("nvim-treesitter.configs").setup(opts)
   end,
-  event = "BufReadPost",
+  event = { "BufRead" },
 }
