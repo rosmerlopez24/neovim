@@ -48,17 +48,7 @@ require("lazy").setup({
   },
   change_detection = { enabled = true, notify = false },
   performance = {
-    cache = {
-      enabled = true,
-      path = vim.fn.stdpath("cache") .. "/lazy/cache",
-      -- Once one of the following events triggers, caching will be disabled.
-      -- To cache all modules, set this to `{}`, but that is not recommended.
-      -- The default is to disable on:
-      --  * VimEnter: not useful to cache anything else beyond startup
-      --  * BufReadPre: this will be triggered early when opening a file from the command line directly
-      disable_events = { "UIEnter", "BufReadPre" },
-      ttl = 3600 * 24 * 5, -- keep unused modules for up to 5 days
-    },
+    cache = { enabled = true },
     reset_packpath = true, -- reset the package path to improve startup time
     rtp = {
       reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
