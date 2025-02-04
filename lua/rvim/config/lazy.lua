@@ -1,3 +1,4 @@
+-- This file is automatically loaded.
 -- Bootstrap lazy.nvim
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -49,8 +50,26 @@ require("lazy").setup({
     -- try to load one of these colorschemes when starting an installation during startup
     colorscheme = { "habamax" },
   },
-  pkg = { enabled = false },
-  rocks = { enabled = false },
+  pkg = {
+    enabled = true,
+    cache = vim.fn.stdpath("state") .. "/lazy/pkg-cache.lua",
+    -- the first package source that is found for a plugin will be used.
+    sources = {
+      "lazy",
+      "rockspec", -- will only be used when rocks.enabled is true
+      "packspec",
+    },
+  },
+  rocks = {
+    enabled = true,
+    root = vim.fn.stdpath("data") .. "/lazy-rocks",
+    server = "https://nvim-neorocks.github.io/rocks-binaries/",
+    -- use hererocks to install luarocks?
+    -- set to `nil` to use hererocks when luarocks is not found
+    -- set to `true` to always use hererocks
+    -- set to `false` to always use luarocks
+    hererocks = nil,
+  },
   ui = {
     -- a number <1 is a percentage., >1 is a fixed size
     size = { width = 0.8, height = 0.8 },
@@ -69,16 +88,16 @@ require("lazy").setup({
       debug = "● ",
       event = " ",
       favorite = " ",
-      ft = " ",
-      init = " ",
+      ft = "",
       import = " ",
+      init = " ",
       keys = " ",
       lazy = "󰒲 ",
-      loaded = "●",
-      not_loaded = "○",
+      loaded = "",
+      not_loaded = "",
       plugin = " ",
-      runtime = " ",
       require = "󰢱 ",
+      runtime = " ",
       source = " ",
       start = " ",
       task = "✔ ",
@@ -102,7 +121,7 @@ require("lazy").setup({
   change_detection = {
     -- automatically check for config file changes and reload the ui
     enabled = true,
-    notify = false, -- get a notification when changes are found
+    notify = true, -- get a notification when changes are found
   },
   performance = {
     cache = { enabled = true },
@@ -114,38 +133,38 @@ require("lazy").setup({
       ---@type string[] list any plugins you want to disable here
       disabled_plugins = {
         "2html_plugin",
+        "bugreport",
+        "compiler",
+        "editorconfig",
+        "ftplugin",
         "getscript",
         "getscriptPlugin",
         "gzip",
         "logipat",
+        "man",
+        "matchit",
+        "matchparen",
         "netrw",
+        "netrwFileHandlers",
         "netrwPlugin",
         "netrwSettings",
-        "netrwFileHandlers",
-        "matchit",
+        "optwin",
+        "osc52",
+        "rplugin",
+        "rrhelper",
+        "shada",
+        "spellfile",
+        "spellfile_plugin",
+        "synmenu",
+        "syntax",
         "tar",
         "tarPlugin",
-        "rrhelper",
-        "spellfile_plugin",
+        "tohtml",
+        "tutor",
         "vimball",
         "vimballPlugin",
         "zip",
         "zipPlugin",
-        "tutor",
-        "rplugin",
-        "syntax",
-        "synmenu",
-        "optwin",
-        "compiler",
-        "bugreport",
-        "ftplugin",
-        "tohtml",
-        "spellfile",
-        "editorconfig",
-        "man",
-        "matchparen",
-        "osc52",
-        "shada",
       },
     },
   },
