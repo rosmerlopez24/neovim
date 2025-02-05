@@ -47,7 +47,6 @@ vim.opt.fillchars = {
   diff = "╱",
   eob = " ",
 }
-vim.o.foldlevel = 99
 vim.o.formatoptions = "jcroqlnt" -- tcqj
 vim.o.grepformat = "%f:%l:%c:%m"
 vim.o.grepprg = "rg --vimgrep"
