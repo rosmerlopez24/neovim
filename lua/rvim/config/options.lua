@@ -93,12 +93,6 @@ vim.o.swapfile = false -- Disable swapfile
 
 if vim.fn.has("nvim-0.10") == 1 then
   vim.o.smoothscroll = true
-  vim.o.foldexpr = "v:lua.require'rvim.util'.ui.foldexpr()"
-  vim.o.foldmethod = "expr"
-  vim.o.foldtext = ""
-else
-  vim.o.foldmethod = "indent"
-  vim.o.foldtext = "v:lua.require'rvim.util'.ui.foldtext()"
 end
 
 -- Fix markdown indentation settings
