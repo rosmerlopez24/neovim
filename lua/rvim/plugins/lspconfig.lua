@@ -6,13 +6,7 @@ return {
     event = "BufReadPost",
     dependencies = {
       "mason.nvim",
-      {
-        "williamboman/mason-lspconfig.nvim",
-        lazy = true,
-        config = function()
-          require("mason-lspconfig").setup()
-        end,
-      },
+      { "williamboman/mason-lspconfig.nvim" },
     },
     opts = {
       -- Options for vim.diagnostic.config()
@@ -38,10 +32,6 @@ return {
           },
         },
       },
-      -- Enable lsp cursor word highlighting
-      document_highlight = {
-        enabled = true,
-      },
       -- Add any global capabilities here
       ---@type table
       capabilities = {
@@ -62,8 +52,6 @@ return {
 
       -- Setup Lsp
       require("rvim.util").lsp.setup()
-      require("rvim.util").lsp.on_dynamic_capability(require("rvim.util").lsp.default_mappings)
-      require("rvim.util").lsp.words.setup(opts.document_highlight)
 
       -- Setup diagnostics signs
       for severity, icon in pairs(opts.diagnostics.signs.text) do
@@ -94,9 +82,6 @@ return {
         require("lspconfig")[server_name].setup(server_opts)
       end
 
-      require("mason-lspconfig").setup({
-        ensure_installed = vim.tbl_keys(RVimOptions.servers),
-      })
       require("mason-lspconfig").setup_handlers({ setup })
     end,
   },
@@ -106,9 +91,7 @@ return {
   -- For more information visit: https://github.com/williamboman/mason.nvim
   {
     "williamboman/mason.nvim",
-    cmd = "Mason",
-    keys = { { "<leader>cm", "<cmd>Mason<CR>", desc = "Mason" } },
-    build = ":MasonUpdate",
+    cmd = { "Mason", "MasonInstall", "MasonUpdate" },
     opts = {
       ui = {
         border = RVimOptions.border,
@@ -121,16 +104,6 @@ return {
     },
     config = function(_, opts)
       require("mason").setup(opts)
-      local mason_registry = require("mason-registry")
-      mason_registry:on("package:install:success", function()
-        vim.defer_fn(function()
-          -- trigger FileType event to possibly load this newly installed LSP server
-          require("lazy.core.handler.event").trigger({
-            event = "FileType",
-            buf = vim.api.nvim_get_current_buf(),
-          })
-        end, 100)
-      end)
     end,
   },
 }
