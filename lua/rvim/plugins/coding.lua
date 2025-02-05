@@ -168,35 +168,18 @@ return {
   -- For more information visit: https://github.com/folke/lazydev.nvim
   {
     "folke/lazydev.nvim",
-    lazy = true,
-    ft = "lua", -- only load on lua files
+    ft = "lua", -- Only load on lua files
     cmd = "LazyDev",
     opts = {
-      runtime = vim.env.VIMRUNTIME --[[@as string]],
       ---@diagnostic disable-next-line
       ---@type lazydev.Library.spec[]
       library = {
-        { path = "luvit-meta/library", words = { "vim%.uv" } },
+        { path = "lazy.nvim", words = { "lazy" } },
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
         { path = "rvim", words = { "rvim" } },
-        { path = "lazy.nvim", words = { "LazyVim" } },
-      },
-      integrations = {
-        -- Fixes lspconfig's workspace management for LuaLS
-        -- Only create a new workspace if the buffer is not part
-        -- of an existing workspace or one of its libraries
-        lspconfig = true,
-        -- add the cmp source for completion of:
-        -- `require "modname"`
-        -- `---@module "modname"`
-        cmp = true,
-        -- same, but for Coq
-        coq = false,
       },
     },
   },
-
-  -- Manage libuv types with lazy. Plugin will never be loaded
-  { "Bilal2453/luvit-meta", lazy = true },
 
   -- Add lazydev source to cmp
   {
