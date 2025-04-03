@@ -1,166 +1,77 @@
 return {
-  -- A completion plugin written in Lua. New version of nvim-compe.
+  -- blink.cmp is a completion plugin with support for LSPs and external sources
+  -- that updates on every keystroke with minimal overhead (0.5-4ms async).
   {
-    "hrsh7th/nvim-cmp",
-    version = false,
-    event = "InsertEnter",
-    dependencies = {
-      { "hrsh7th/cmp-path", lazy = true },
-      { "hrsh7th/cmp-buffer", lazy = true },
-      { "hrsh7th/cmp-nvim-lsp", lazy = true },
-      { "hrsh7th/cmp-cmdline", lazy = true },
-      { "saadparwaiz1/cmp_luasnip", lazy = true },
-      { "L3MON4D3/LuaSnip" },
-    },
-    opts = function()
-      local cmp = require("cmp")
-      local auto_select = true
-      local has_words_before = function()
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0
-          and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s")
-            == nil
-      end
-      return {
-        completion = {
-          completeopt = "menu,menuone,noinsert" .. (auto_select and "" or ",noselect"),
-        },
-        preselect = cmp.PreselectMode.Item or cmp.PreselectMode.None,
-        snippet = {
-          expand = function(args)
-            require("luasnip").lsp_expand(args.body)
-          end,
-        },
-        mapping = cmp.mapping.preset.insert({
-          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-          ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<CR>"] = require("rvim.util").cmp.confirm({ select = auto_select }),
-          ["<C-y>"] = require("rvim.util").cmp.confirm({ select = true }),
-          ["<S-CR>"] = require("rvim.util").cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace }),
-          ["<C-CR>"] = function(fallback)
-            cmp.abort()
-            fallback()
-          end,
-          ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif require("luasnip").expand_or_jumpable() then
-              require("luasnip").expand_or_jump()
-            elseif has_words_before() then
-              cmp.complete()
-            else
-              -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-              fallback()
-            end
-          end, { "i", "s" }),
-          ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif require("luasnip").jumpable(-1) then
-              require("luasnip").jump(-1)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-        }),
-        sources = {
-          { name = "nvim_lsp" },
-          { name = "luasnip" },
-          { name = "buffer" },
-          { name = "path" },
-        },
-        formatting = {
-          ---@diagnostic disable-next-line
-          format = function(entry, item)
-            local icons = RVimOptions.icons.kinds
-            if icons[item.kind] then
-              item.kind = icons[item.kind] .. item.kind
-            end
-            local widths = {
-              abbr = vim.g.cmp_widths and vim.g.cmp_widths.abbr or 40,
-              menu = vim.g.cmp_widths and vim.g.cmp_widths.menu or 30,
-            }
-            for key, width in pairs(widths) do
-              if item[key] and vim.fn.strdisplaywidth(item[key]) > width then
-                item[key] = vim.fn.strcharpart(item[key], 0, width - 1) .. "…"
-              end
-            end
-            return item
-          end,
-        },
-        window = {
-          completion = {
-            border = RVimOptions.border,
-            scrollbar = false,
-            side_padding = 1,
-            winhighlight = "Normal:CmpPmenu,CursorLine:CmpSel,Search:None,FloatBorder:CmpBorder",
-          },
-          documentation = {
-            border = RVimOptions.border,
-            winhighlight = "Normal:CmpDoc,FloatBorder:CmpDocBorder",
-          },
-        },
-      }
-    end,
-    config = function(_, opts)
-      for _, source in ipairs(opts.sources) do
-        source.group_index = source.group_index or 1
-      end
-      require("cmp").setup(opts)
-
-      -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-      require("cmp").setup.cmdline({ "/", "?" }, {
-        mapping = require("cmp").mapping.preset.cmdline(),
-        sources = {
-          { name = "buffer" },
-        },
-      })
-
-      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-      require("cmp").setup.cmdline(":", {
-        mapping = require("cmp").mapping.preset.cmdline(),
-        sources = require("cmp").config.sources({
-          { name = "path" },
-        }, {
-          { name = "cmdline" },
-        }),
-      })
-    end,
-  },
-
-  -- A snippet engine written in Lua.
-  {
-    "L3MON4D3/LuaSnip",
+    "saghen/blink.cmp",
     lazy = true,
-    version = "v2.*",
-    build = "make install_jsregexp",
+    event = "BufReadPost",
+    -- optional: provides snippets for the snippet source
     dependencies = {
-      {
-        "rafamadriz/friendly-snippets",
-        lazy = true,
-        config = function()
-          require("luasnip.loaders.from_vscode").lazy_load()
-        end,
-      },
+      { "rafamadriz/friendly-snippets" },
     },
-    config = function(_, opts)
-      require("luasnip").config.set_config(opts)
-    end,
-  },
-
-  -- A minimalist autopairs written by Lua.
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = function(_, opts)
-      require("nvim-autopairs").setup(opts)
-      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-      local cmp = require("cmp")
-      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-    end,
+    -- use a release tag to download pre-built binaries
+    version = "1.*",
+    -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+    -- build = 'cargo build --release',
+    -- If you use nix, you can build from source using latest nightly rust with:
+    -- build = 'nix run .#build-plugin',
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
+    opts = {
+      -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
+      -- 'super-tab' for mappings similar to vscode (tab to accept)
+      -- 'enter' for enter to accept
+      -- 'none' for no mappings
+      --
+      -- All presets have the following mappings:
+      -- C-space: Open menu or open docs if already open
+      -- C-n/C-p or Up/Down: Select next/previous item
+      -- C-e: Hide menu
+      -- C-k: Toggle signature help (if signature.enabled = true)
+      --
+      -- See :h blink-cmp-config-keymap for defining your own keymap
+      keymap = { preset = "enter" },
+      appearance = {
+        -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+        -- Adjusts spacing to ensure icons are aligned
+        nerd_font_variant = "mono",
+        kind_icons = RVimOptions.icons.kinds,
+      },
+      -- (Default) Only show the documentation popup when manually triggered
+      completion = {
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 500,
+        },
+        menu = {
+          -- Keep the cursor X lines away from the top/bottom of the window
+          scrolloff = 2,
+          -- Note that the gutter will be disabled when border ~= 'none'
+          scrollbar = false,
+          -- Controls how the completion items are rendered on the popup window
+          draw = {
+            treesitter = { "lsp" },
+            columns = {
+              { "kind_icon" },
+              { "label", "label_description", gap = 1 },
+              { "kind" },
+            },
+          },
+        },
+      },
+      -- Default list of enabled providers defined so that you can extend it
+      -- elsewhere in your config, without redefining it, due to `opts_extend`
+      sources = {
+        default = { "lsp", "path", "snippets", "buffer" },
+      },
+      -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
+      -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
+      -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
+      --
+      -- See the fuzzy documentation for more information
+      fuzzy = { implementation = "prefer_rust_with_warning" },
+    },
+    opts_extend = { "sources.default" },
   },
 
   -- lazydev.nvim is a plugin that properly configures LuaLS for editing your Neovim config
@@ -181,16 +92,22 @@ return {
     },
   },
 
-  -- Add lazydev source to cmp
   {
-    "hrsh7th/nvim-cmp",
-    opts = function(_, opts)
-      opts.sources = opts.sources or {}
-      table.insert(opts.sources, {
-        name = "lazydev",
-        group_index = 0, -- Set group index to 0 to skip loading LuaLS completions
-      })
-    end,
+    "saghen/blink.cmp",
+    opts = {
+      sources = {
+        -- add lazydev to your completion providers
+        default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+        providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            -- make lazydev completions top priority (see `:h blink.cmp`)
+            score_offset = 100,
+          },
+        },
+      },
+    },
   },
 
   -- Smart and Powerful commenting plugin for neovim
