@@ -22,14 +22,8 @@ return {
         section_separators = { left = "", right = "" },
         component_separators = { left = "", right = "" },
         disabled_filetypes = {
-          statusline = {
-            "nvim-tree",
-            "NvimTree",
-            "lazy",
-          },
-          winbar = {},
+          statusline = { "NvimTree", "lazy" },
         },
-        ignore_focus = {},
         always_divide_middle = true,
         globalstatus = vim.o.laststatus == 3,
         refresh = {
@@ -39,26 +33,18 @@ return {
         },
       },
       sections = {
-        lualine_a = { { "mode", icon = "" } },
-        lualine_b = { "branch" },
-        lualine_c = {
+        lualine_a = { "mode" },
+        lualine_b = {
+          { "branch" },
           {
             "diagnostics",
-            -- Table of diagnostic sources, available sources are:
-            --   'nvim_lsp', 'nvim_diagnostic', 'nvim_workspace_diagnostic', 'coc', 'ale', 'vim_lsp'.
-            -- or a function that returns a table as such:
-            --   { error=error_cnt, warn=warn_cnt, info=info_cnt, hint=hint_cnt }
             sources = { "nvim_lsp" },
-            -- Displays diagnostics for the defined severity types
-            --
             sections = { "error", "warn", "info", "hint" },
-
             diagnostics_color = {
-              -- Same values as the general color option can be used here.
-              error = "DiagnosticError", -- Changes diagnostics' error color.
-              warn = "DiagnosticWarn", -- Changes diagnostics' warn color.
-              info = "DiagnosticInfo", -- Changes diagnostics' info color.
-              hint = "DiagnosticHint", -- Changes diagnostics' hint color.
+              error = "DiagnosticError",
+              warn = "DiagnosticWarn",
+              info = "DiagnosticInfo",
+              hint = "DiagnosticHint",
             },
             symbols = {
               error = RVimOptions.icons.diagnostics.Error,
@@ -66,17 +52,12 @@ return {
               info = RVimOptions.icons.diagnostics.Info,
               hint = RVimOptions.icons.diagnostics.Hint,
             },
-            colored = true, -- Displays diagnostics status in color if set to true.
-            update_in_insert = true, -- Update diagnostics in insert mode.
-            always_visible = true, -- Show diagnostics even if there are none.
+            colored = true,
+            update_in_insert = true,
+            always_visible = true,
           },
-
-          {
-            "filetype",
-            icon_only = true,
-            separator = "",
-            padding = { left = 1, right = 0 },
-          },
+        },
+        lualine_c = {
           {
             "filename",
             path = 1,
@@ -86,25 +67,21 @@ return {
         lualine_x = {
           {
             "diff",
-            colored = true, -- Displays a colored diff status if set to true
-            -- Changes the symbols used by the diff.
+            colored = true,
             symbols = {
               added = RVimOptions.icons.git.added,
               modified = RVimOptions.icons.git.modified,
               removed = RVimOptions.icons.git.removed,
             },
           },
+          { "encoding" },
+          { "fileformat" },
+          { "filetype" },
         },
         lualine_y = {
-          { "encoding" },
           { "progress", separator = "", padding = { left = 1, right = 1 } },
-          { "location", padding = { left = 1, right = 1 } },
         },
-        lualine_z = {
-          function()
-            return "󰥔 " .. os.date("%R")
-          end,
-        },
+        lualine_z = { "location" },
       },
       inactive_sections = {
         lualine_a = {},
@@ -114,10 +91,6 @@ return {
         lualine_y = {},
         lualine_z = {},
       },
-      tabline = {},
-      winbar = {},
-      inactive_winbar = {},
-      extensions = { "nvim-tree", "lazy" },
     },
     config = function(_, opts)
       require("lualine").setup(opts)
