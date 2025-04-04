@@ -18,9 +18,6 @@ return {
           spacing = 4,
           source = "if_many",
           prefix = "●",
-          -- this will set set the prefix to a function that returns the diagnostics icon based on the severity
-          -- this only works on a recent 0.10.0 build. Will be set to "●" when not supported
-          -- prefix = "icons",
         },
         severity_sort = true,
         signs = {
@@ -32,57 +29,33 @@ return {
           },
         },
       },
-      -- Add any global capabilities here
-      ---@type table
-      capabilities = {
-        workspace = {
-          fileOperations = {
-            didRename = true,
-            willRename = true,
-          },
-        },
-      },
     },
     config = function(_, opts)
-      -- Setup mappings
-      ---@diagnostic disable-next-line
-      require("rvim.util").lsp.on_attach(function(client, buffer)
-        require("rvim.util").lsp.default_mappings(buffer)
-      end)
+      require("rvim.util").lsp.setup() -- Setup default config for lsp servers
 
-      -- Setup Lsp
-      require("rvim.util").lsp.setup()
-
-      -- Setup diagnostics signs
       for severity, icon in pairs(opts.diagnostics.signs.text) do
         local name = vim.diagnostic.severity[severity]:lower():gsub("^%l", string.upper)
         name = "DiagnosticSign" .. name
         vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
       end
 
-      -- Setup diagnostics config
       vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
-      -- Setup capabilities
-      local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+      local has_blink, blink_cmp = pcall(require, "blink-cmp")
       local capabilities = vim.tbl_deep_extend(
         "force",
         {},
         vim.lsp.protocol.make_client_capabilities(),
-        has_cmp and cmp_nvim_lsp.default_capabilities() or {},
-        opts.capabilities or {}
+        has_blink and blink_cmp.get_lsp_capabilities() or {}
       )
 
-      ---@param server_name string
-      ---@return nil
-      local function setup(server_name)
-        local server_opts = vim.tbl_deep_extend("force", {
-          capabilities = vim.deepcopy(capabilities),
-        }, RVimOptions.servers[server_name] or {})
-        require("lspconfig")[server_name].setup(server_opts)
-      end
-
-      require("mason-lspconfig").setup_handlers({ setup })
+      require("mason-lspconfig").setup_handlers({
+        function(server_name)
+          require("lspconfig")[server_name].setup(
+            vim.tbl_deep_extend("force", capabilities, RVimOptions.servers[server_name] or {})
+          )
+        end,
+      })
     end,
   },
 
