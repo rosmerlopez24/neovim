@@ -90,15 +90,16 @@ return {
     lazy = RVimOptions.colorscheme ~= "catppuccin",
     opts = {
       flavour = RVimOptions.style,
+      default_integrations = false,
       integrations = {
-        cmp = true,
+        blink_cmp = true,
         gitsigns = true,
-        mason = true,
         nvimtree = true,
         treesitter = true,
+        mason = true,
         indent_blankline = {
           enabled = true,
-          scope_color = "lavender", -- catppuccin color (eg. `lavender`) Default: text
+          scope_color = "",
           colored_indent_levels = false,
         },
         native_lsp = {
@@ -108,12 +109,14 @@ return {
             hints = { "italic" },
             warnings = { "italic" },
             information = { "italic" },
+            ok = { "italic" },
           },
           underlines = {
             errors = { "underline" },
             hints = { "underline" },
             warnings = { "underline" },
             information = { "underline" },
+            ok = { "underline" },
           },
           inlay_hints = {
             background = true,
