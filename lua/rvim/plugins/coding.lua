@@ -6,9 +6,7 @@ return {
     lazy = true,
     event = "BufReadPost",
     -- optional: provides snippets for the snippet source
-    dependencies = {
-      { "rafamadriz/friendly-snippets" },
-    },
+    dependencies = { { "rafamadriz/friendly-snippets" } },
     -- use a release tag to download pre-built binaries
     version = "1.*",
     -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
@@ -39,10 +37,11 @@ return {
       },
       -- (Default) Only show the documentation popup when manually triggered
       completion = {
-        documentation = {
-          auto_show = true,
-          auto_show_delay_ms = 500,
+        accept = {
+          -- experimental auto-brackets support
+          auto_brackets = { enabled = true },
         },
+        documentation = { auto_show = true, auto_show_delay_ms = 500 },
         menu = {
           -- Keep the cursor X lines away from the top/bottom of the window
           scrolloff = 2,
@@ -71,7 +70,7 @@ return {
       -- See the fuzzy documentation for more information
       fuzzy = { implementation = "prefer_rust_with_warning" },
     },
-    opts_extend = { "sources.default" },
+    opts_extend = { "sources.default", "sources.completion.enabled_providers" },
   },
 
   -- lazydev.nvim is a plugin that properly configures LuaLS for editing your Neovim config
