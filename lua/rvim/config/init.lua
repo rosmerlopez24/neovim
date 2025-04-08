@@ -145,10 +145,10 @@ function M.setup()
   -- used to override previous configurations.
 
   -- Disable language providers to potentially improve startup time
-  vim.g.loaded_perl_provider = false
-  vim.g.loaded_python3_provider = false
-  vim.g.loaded_ruby_provider = false
-  vim.g.loaded_node_provider = false
+  vim.g.loaded_perl_provider = 0
+  vim.g.loaded_python3_provider = 0
+  vim.g.loaded_ruby_provider = 0
+  vim.g.loaded_node_provider = 0
 
   ---@class RVimOptions
   _G.RVimOptions = vim.deepcopy(defaults)
