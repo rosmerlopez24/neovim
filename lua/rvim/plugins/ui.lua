@@ -123,5 +123,5 @@ return {
   },
 
   -- A Lua fork of vim-devicons.
-  { "nvim-tree/nvim-web-devicons", lazy = true },
+  { "nvim-tree/nvim-web-devicons", lazy = true, opts = {} },
 }
