@@ -49,13 +49,19 @@ map("n", "<S-Tab>", "<cmd>bprevious<cr>", { desc = "Prev Buffer", silent = true,
 map(
   "n",
   "<leader>bd",
-  "<cmd>:lua require('rvim.util').ui.buffer_delete()<cr>",
+  [[<cmd>lua rvim.bufdelete.delete()<cr>]],
   { desc = "Delete Buffer", silent = true, noremap = true }
 )
 map(
   "n",
+  "<leader>bo",
+  [[<cmd>lua rvim.bufdelete.other()<cr>]],
+  { desc = "Delete Other Buffers", silent = true, noremap = true }
+)
+map(
+  "n",
   "<leader>bD",
-  "<cmd>:bd<cr>",
+  [[<cmd>bd<cr>]],
   { desc = "Delete Buffer and Window", silent = true, noremap = true }
 )
 
