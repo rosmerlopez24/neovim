@@ -125,25 +125,6 @@ local defaults = {
 }
 
 function M.setup()
-  -- Reset the package path to improve startup time
-  vim.go.packpath = vim.env.VIMRUNTIME
-
-  -- Sets Neovim's 'runtimepath' option (where it looks for plugins, syntax files, etc.)
-  -- using a string with paths separated by commas.
-  vim.o.rtp = vim.fn.stdpath("config")
-    .. ","
-    -- Adds the user's main configuration directory (e.g., ~/.config/nvim).
-    .. vim.fn.stdpath("data")
-    .. "/site,"
-    -- Adds the user's data directory for site-specific files.
-    .. vim.env.VIMRUNTIME
-    .. ","
-    -- Adds the path to Neovim's runtime directory, where the base files are located.
-    .. vim.fn.stdpath("config")
-    .. "/after"
-  -- Adds the 'after' directory within the configuration directory,
-  -- used to override previous configurations.
-
   -- Disable language providers to potentially improve startup time
   vim.g.loaded_perl_provider = 0
   vim.g.loaded_python3_provider = 0
