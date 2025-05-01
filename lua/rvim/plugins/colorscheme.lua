@@ -253,4 +253,41 @@ return {
       },
     },
   },
+
+  -- NeoVim dark colorscheme inspired by the colors of the famous painting by Katsushika Hokusai.
+  -- https://github.com/rebelot/kanagawa.nvim
+  {
+    "rebelot/kanagawa.nvim",
+    name = "kanagawa",
+    lazy = rvim.config.colorscheme ~= "kanagawa",
+    priority = 1000,
+    opts = {
+      compile = false, -- enable compiling the colorscheme
+      undercurl = true, -- enable undercurls
+      commentStyle = { italic = true },
+      functionStyle = {},
+      keywordStyle = { italic = true },
+      statementStyle = { bold = true },
+      typeStyle = {},
+      transparent = false, -- do not set background color
+      dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+      terminalColors = false, -- define vim.g.terminal_color_{0,17}
+      colors = { -- add/modify theme and palette colors
+        palette = {},
+        theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
+      },
+      ---@diagnostic disable-next-line
+      overrides = function(colors) -- add/modify highlights
+        return {}
+      end,
+      theme = rvim.config.style, -- Load "wave" theme
+      background = { -- map the value of 'background' option to a theme
+        dark = "dragon", -- try "dragon" !
+        light = "lotus",
+      },
+    },
+    config = function(_, opts)
+      require("kanagawa").setup(opts)
+    end,
+  },
 }
