@@ -18,7 +18,7 @@ return {
     opts = {
       options = {
         icons_enabled = true,
-        theme = RVimOptions.colorscheme,
+        theme = rvim.config.colorscheme,
         section_separators = { left = "", right = "" },
         component_separators = { left = "", right = "" },
         disabled_filetypes = {
@@ -47,10 +47,10 @@ return {
               hint = "DiagnosticHint",
             },
             symbols = {
-              error = RVimOptions.icons.diagnostics.Error,
-              warn = RVimOptions.icons.diagnostics.Warn,
-              info = RVimOptions.icons.diagnostics.Info,
-              hint = RVimOptions.icons.diagnostics.Hint,
+              error = rvim.config.icons.diagnostics.Error,
+              warn = rvim.config.icons.diagnostics.Warn,
+              info = rvim.config.icons.diagnostics.Info,
+              hint = rvim.config.icons.diagnostics.Hint,
             },
             colored = true,
             update_in_insert = true,
@@ -69,9 +69,9 @@ return {
             "diff",
             colored = true,
             symbols = {
-              added = RVimOptions.icons.git.added,
-              modified = RVimOptions.icons.git.modified,
-              removed = RVimOptions.icons.git.removed,
+              added = rvim.config.icons.git.added,
+              modified = rvim.config.icons.git.modified,
+              removed = rvim.config.icons.git.removed,
             },
           },
           { "encoding" },

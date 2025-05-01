@@ -15,14 +15,14 @@ return {
   end,
   opts = {
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
-    ensure_installed = RVimOptions.treesitter.ensure_installed,
+    ensure_installed = rvim.config.treesitter.ensure_installed,
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,
     -- Automatically install missing parsers when entering buffer
     -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-    auto_install = RVimOptions.treesitter.auto_install,
+    auto_install = rvim.config.treesitter.auto_install,
     -- List of parsers to ignore installing (for "all")
-    ignore_install = RVimOptions.treesitter.ignore_install,
+    ignore_install = rvim.config.treesitter.ignore_install,
     highlight = { enable = true },
     indent = { enable = true },
   },

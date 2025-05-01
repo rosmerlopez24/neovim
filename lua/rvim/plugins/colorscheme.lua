@@ -5,7 +5,7 @@ return {
     "marko-cerovac/material.nvim",
     name = "material",
     priority = 1000,
-    lazy = RVimOptions.colorscheme ~= "material",
+    lazy = rvim.config.colorscheme ~= "material",
     opts = {
       contrast = {
         terminal = false, -- Enable contrast for the built-in terminal
@@ -75,7 +75,7 @@ return {
     "shaunsingh/nord.nvim",
     name = "nord",
     priority = 1000,
-    lazy = RVimOptions.colorscheme ~= "nord",
+    lazy = rvim.config.colorscheme ~= "nord",
     config = function()
       vim.g.nord_italic = false
     end,
@@ -87,9 +87,9 @@ return {
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
-    lazy = RVimOptions.colorscheme ~= "catppuccin",
+    lazy = rvim.config.colorscheme ~= "catppuccin",
     opts = {
-      flavour = RVimOptions.style,
+      flavour = rvim.config.style,
       default_integrations = false,
       integrations = {
         blink_cmp = true,
@@ -135,9 +135,9 @@ return {
     "folke/tokyonight.nvim",
     name = "tokyonight",
     priority = 1000,
-    lazy = RVimOptions.colorscheme ~= "tokyonight",
+    lazy = rvim.config.colorscheme ~= "tokyonight",
     opts = {
-      style = RVimOptions.style, -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
+      style = rvim.config.style, -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
       light_style = "day", -- The theme is used when the background is set to light
       transparent = false, -- Enable this to disable setting the background color
       terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
@@ -167,12 +167,12 @@ return {
   {
     "uloco/bluloco.nvim",
     name = "bluloco",
-    lazy = RVimOptions.colorscheme ~= "bluloco",
+    lazy = rvim.config.colorscheme ~= "bluloco",
     priority = 1000,
     dependencies = { "rktjmp/lush.nvim" },
     config = function()
       require("bluloco").setup({
-        style = RVimOptions.style, -- "auto" | "dark" | "light"
+        style = rvim.config.style, -- "auto" | "dark" | "light"
         transparent = false,
         italics = false,
         terminal = vim.fn.has("gui_running") == 1, -- bluoco colors are enabled in gui terminals per default.
@@ -186,11 +186,11 @@ return {
   {
     "rose-pine/neovim",
     name = "rose-pine",
-    lazy = RVimOptions.colorscheme ~= "rose-pine",
+    lazy = rvim.config.colorscheme ~= "rose-pine",
     priority = 1000,
     opts = {
-      variant = RVimOptions.style, -- auto, main, moon, or dawn
-      dark_variant = RVimOptions.style, -- main, moon, or dawn
+      variant = rvim.config.style, -- auto, main, moon, or dawn
+      dark_variant = rvim.config.style, -- main, moon, or dawn
       styles = { italic = false },
     },
     config = function(_, opts)
@@ -203,11 +203,11 @@ return {
   {
     "navarasu/onedark.nvim",
     name = "onedark",
-    lazy = RVimOptions.colorscheme ~= "onedark",
+    lazy = rvim.config.colorscheme ~= "onedark",
     priority = 1000,
     opts = {
       -- Main options --
-      style = RVimOptions.style, -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+      style = rvim.config.style, -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
       transparent = false, -- Show/hide background
       term_colors = true, -- Change terminal color as per the selected theme style
       ending_tildes = false, -- Show the end-of-buffer tildes. By default they are hidden

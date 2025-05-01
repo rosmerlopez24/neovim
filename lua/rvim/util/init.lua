@@ -1,4 +1,5 @@
 ---@class rvim.util
+---@field config rvim.options
 ---@field cmp rvim.util.cmp
 ---@field lsp rvim.util.lsp
 ---@field ui rvim.util.ui

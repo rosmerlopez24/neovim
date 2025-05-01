@@ -22,10 +22,10 @@ return {
         severity_sort = true,
         signs = {
           text = {
-            [vim.diagnostic.severity.ERROR] = RVimOptions.icons.diagnostics.Error,
-            [vim.diagnostic.severity.WARN] = RVimOptions.icons.diagnostics.Warn,
-            [vim.diagnostic.severity.HINT] = RVimOptions.icons.diagnostics.Hint,
-            [vim.diagnostic.severity.INFO] = RVimOptions.icons.diagnostics.Info,
+            [vim.diagnostic.severity.ERROR] = rvim.config.icons.diagnostics.Error,
+            [vim.diagnostic.severity.WARN] = rvim.config.icons.diagnostics.Warn,
+            [vim.diagnostic.severity.HINT] = rvim.config.icons.diagnostics.Hint,
+            [vim.diagnostic.severity.INFO] = rvim.config.icons.diagnostics.Info,
           },
         },
       },
@@ -52,7 +52,7 @@ return {
       require("mason-lspconfig").setup_handlers({
         function(server_name)
           require("lspconfig")[server_name].setup(
-            vim.tbl_deep_extend("force", capabilities, RVimOptions.servers[server_name] or {})
+            vim.tbl_deep_extend("force", capabilities, rvim.config.servers[server_name] or {})
           )
         end,
       })
@@ -67,7 +67,7 @@ return {
     cmd = { "Mason", "MasonInstall", "MasonUpdate" },
     opts = {
       ui = {
-        border = RVimOptions.border,
+        border = rvim.config.border,
         icons = {
           package_pending = " ",
           package_installed = " ",

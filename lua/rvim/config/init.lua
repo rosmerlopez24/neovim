@@ -1,7 +1,6 @@
----@class RVimConfig : RVimOptions
 local M = {}
 
----@class RVimOptions
+---@class rvim.options
 local defaults = {
   -- General settings
   -- Border Win
@@ -131,8 +130,8 @@ function M.setup()
   vim.g.loaded_ruby_provider = 0
   vim.g.loaded_node_provider = 0
 
-  ---@class RVimOptions
-  _G.RVimOptions = vim.deepcopy(defaults)
+  _G.rvim = require("rvim.util")
+  rvim.config = vim.deepcopy(defaults)
 
   -- Try to load user config and notify if it fails
   local user_config = "rvim.rvimrc"
@@ -154,10 +153,10 @@ function M.setup()
   require("rvim.config.lazy")
 
   -- Setup colorscheme
-  if RVimOptions.colorscheme == "material" then
-    vim.g.material_style = RVimOptions.style
+  if rvim.config.colorscheme == "material" then
+    vim.g.material_style = rvim.config.style
   end
-  vim.api.nvim_command("colorscheme " .. RVimOptions.colorscheme)
+  vim.api.nvim_command("colorscheme " .. rvim.config.colorscheme)
 end
 
 return M

@@ -36,7 +36,7 @@ require("lazy").setup({
   rocks = { enabled = false },
   ui = {
     -- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
-    border = RVimOptions.border,
+    border = rvim.config.border,
     icons = { loaded = "", not_loaded = "" },
   },
   custom_keys = {},
