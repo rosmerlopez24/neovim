@@ -1,14 +1,25 @@
 return {
-
   -- Neovim file explorer: edit your filesystem like a buffer
   {
     "stevearc/oil.nvim",
     ---@module 'oil'
     ---@type oil.SetupOpts
-    opts = {},
+    opts = {
+      -- Window-local options to use for oil buffers
+      win_options = {
+        wrap = false,
+        signcolumn = "yes",
+        cursorcolumn = false,
+        foldcolumn = "0",
+        spell = false,
+        list = false,
+        conceallevel = 3,
+        concealcursor = "nvic",
+      },
+    },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     lazy = true,
-    keys = { { "-", "<CMD>Oil<CR>", { desc = "Open parent directory" } } },
+    keys = { { "-", "<cmd>Oil<cr>", { desc = "Open parent directory" } } },
     config = function(_, opts)
       require("oil").setup(opts)
     end,
