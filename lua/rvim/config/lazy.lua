@@ -28,7 +28,6 @@ require("lazy").setup({
     { import = "rvim.plugins.colorscheme" },
     { import = "rvim.plugins.editor" },
     { import = "rvim.plugins.formatting" },
-    { import = "rvim.plugins.lspconfig" },
     { import = "rvim.plugins.treesitter" },
     { import = "rvim.plugins.ui" },
   },
