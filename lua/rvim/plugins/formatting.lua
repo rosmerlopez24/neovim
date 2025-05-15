@@ -2,7 +2,6 @@
 -- For more information https://github.com/stevearc/conform.nvim
 return {
   "stevearc/conform.nvim",
-  dependencies = { "mason.nvim" },
   lazy = true,
   event = "BufReadPost",
   cmd = "ConformInfo",
