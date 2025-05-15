@@ -52,4 +52,47 @@ function M.setup()
   })
 end
 
+--- Gets the capabilities to pass to the LSP client
+function M.get_lsp_capabilities()
+  return vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_capabilities() or {}, {
+    textDocument = {
+      completion = {
+        completionItem = {
+          snippetSupport = true,
+          commitCharactersSupport = false,
+          documentationFormat = { "markdown", "plaintext" },
+          deprecatedSupport = true,
+          preselectSupport = false,
+          tagSupport = { valueSet = { 1 } },
+          insertReplaceSupport = true,
+          resolveSupport = {
+            properties = {
+              "documentation",
+              "detail",
+              "additionalTextEdits",
+              "command",
+              "data",
+            },
+          },
+          insertTextModeSupport = {
+            valueSet = { 1 },
+          },
+          labelDetailsSupport = true,
+        },
+        completionList = {
+          itemDefaults = {
+            "commitCharacters",
+            "editRange",
+            "insertTextFormat",
+            "insertTextMode",
+            "data",
+          },
+        },
+        contextSupport = true,
+        insertTextMode = 1, -- asIs
+      },
+    },
+  })
+end
+
 return M
