@@ -52,6 +52,39 @@ function M.setup()
   })
 end
 
+-- Set the diagnostic config
+function M.set_diagnostic_config()
+  -- Diagnostic Config
+  -- See :help vim.diagnostic.Opts
+  vim.diagnostic.config({
+    severity_sort = true,
+    float = { border = rvim.config.border, source = "if_many" },
+    underline = { severity = vim.diagnostic.severity.ERROR },
+    signs = {
+      text = {
+        [vim.diagnostic.severity.ERROR] = rvim.config.icons.diagnostics.Error,
+        [vim.diagnostic.severity.WARN] = rvim.config.icons.diagnostics.Warn,
+        [vim.diagnostic.severity.HINT] = rvim.config.icons.diagnostics.Hint,
+        [vim.diagnostic.severity.INFO] = rvim.config.icons.diagnostics.Info,
+      },
+    } or {},
+    virtual_text = {
+      prefix = "●",
+      source = "if_many",
+      spacing = 2,
+      format = function(diagnostic)
+        local diagnostic_message = {
+          [vim.diagnostic.severity.ERROR] = diagnostic.message,
+          [vim.diagnostic.severity.WARN] = diagnostic.message,
+          [vim.diagnostic.severity.INFO] = diagnostic.message,
+          [vim.diagnostic.severity.HINT] = diagnostic.message,
+        }
+        return diagnostic_message[diagnostic.severity]
+      end,
+    },
+  })
+end
+
 --- Gets the capabilities to pass to the LSP client
 function M.get_lsp_capabilities()
   return vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_capabilities() or {}, {
