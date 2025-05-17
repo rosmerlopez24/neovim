@@ -262,31 +262,31 @@ return {
     lazy = rvim.config.colorscheme ~= "kanagawa",
     priority = 1000,
     opts = {
-      compile = false, -- enable compiling the colorscheme
-      undercurl = true, -- enable undercurls
-      commentStyle = { italic = true },
+      compile = true,
+      undercurl = true,
+      commentStyle = { italic = false },
       functionStyle = {},
-      keywordStyle = { italic = true },
-      statementStyle = { bold = true },
+      keywordStyle = { italic = false },
+      statementStyle = { bold = false },
       typeStyle = {},
-      transparent = false, -- do not set background color
-      dimInactive = false, -- dim inactive window `:h hl-NormalNC`
-      terminalColors = false, -- define vim.g.terminal_color_{0,17}
-      colors = { -- add/modify theme and palette colors
-        palette = {},
-        theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
-      },
-      ---@diagnostic disable-next-line
-      overrides = function(colors) -- add/modify highlights
-        return {}
+      transparent = false,
+      dimInactive = false,
+      terminalColors = false,
+      colors = { theme = { all = { ui = { bg_gutter = "none" } } } },
+      overrides = function(colors)
+        local theme = colors.theme
+        return {
+          Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 },
+          PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
+          PmenuSbar = { bg = theme.ui.bg_m1 },
+          PmenuThumb = { bg = theme.ui.bg_p2 },
+        }
       end,
-      theme = rvim.config.style, -- Load "wave" theme
-      background = { -- map the value of 'background' option to a theme
-        dark = "dragon", -- try "dragon" !
-        light = "lotus",
-      },
+      theme = rvim.config.style,
+      background = { dark = "dragon", light = "lotus" },
     },
     config = function(_, opts)
+      vim.g.kanagawa_lualine_bold = true
       require("kanagawa").setup(opts)
     end,
   },
