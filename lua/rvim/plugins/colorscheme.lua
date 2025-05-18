@@ -163,23 +163,6 @@ return {
   },
 
   -- For more information visit this Repo
-  -- https://github.com/rose-pine/neovim
-  {
-    "rose-pine/neovim",
-    name = "rose-pine",
-    lazy = rvim.config.colorscheme ~= "rose-pine",
-    priority = 1000,
-    opts = {
-      variant = rvim.config.style, -- auto, main, moon, or dawn
-      dark_variant = rvim.config.style, -- main, moon, or dawn
-      styles = { italic = false },
-    },
-    config = function(_, opts)
-      require("rose-pine").setup(opts)
-    end,
-  },
-
-  -- For more information visit this Repo
   -- https://github.com/navarasu/onedark.nvim
   {
     "navarasu/onedark.nvim",
@@ -233,6 +216,23 @@ return {
         background = true, -- use background color for virtual text
       },
     },
+  },
+
+  -- All natural pine, faux fur and a bit of soho vibes for the classy minimalist
+  -- https://github.com/rose-pine/neovim
+  {
+    "rose-pine/neovim",
+    name = "rose-pine",
+    lazy = rvim.config.colorscheme ~= "rose-pine",
+    priority = 1000,
+    opts = {
+      variant = rvim.config.style,
+      dark_variant = rvim.config.style,
+      styles = { italic = false },
+    },
+    config = function(_, opts)
+      require("rose-pine").setup(opts)
+    end,
   },
 
   -- This is a port of the popular Visual Studio Code Themes Bluloco Light and Bluloco Dark
