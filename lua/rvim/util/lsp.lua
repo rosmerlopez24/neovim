@@ -1,53 +1,31 @@
 ---@class rvim.util.lsp
 local M = {}
 
-function M.setup()
-  -- Autocommand LspAttach
+-- Set key-mapping config for LSP
+function M.set_key_mapping_config()
   vim.api.nvim_create_autocmd("LspAttach", {
-    group = vim.api.nvim_create_augroup("rvim-lsp-attach", {}),
+    group = vim.api.nvim_create_augroup("rvim_key_mapping_config", { clear = true }),
     callback = function(event)
-      local buffer = event.buf ---@type number
-      local client = vim.lsp.get_client_by_id(event.data.client_id)
-
-      -- Configure mappgins
-      local opts = { noremap = true, silent = true, buffer = buffer }
-      vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-      vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-      vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-      vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-      vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-      vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-
-      -- Enable document highlight
-      if client and client.server_capabilities.documentHighlightProvider then
-        local highlight_augroup = vim.api.nvim_create_augroup("rvim-lsp-highlight", {})
-
-        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-          buffer = event.buf,
-          group = highlight_augroup,
-          callback = vim.lsp.buf.document_highlight,
-        })
-
-        vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-          buffer = event.buf,
-          group = highlight_augroup,
-          callback = vim.lsp.buf.clear_references,
-        })
+      -- Custom only local function
+      local function map(keys, func, desc)
+        ---@type vim.api.keyset.keymap
+        local default = { silent = true, noremap = true }
+        ---@type vim.api.keyset.keymap
+        local opts = { desc = "LSP: " .. desc, callback = func }
+        opts = vim.tbl_deep_extend("force", default, opts)
+        vim.api.nvim_buf_set_keymap(event.buf, "n", keys, "", opts)
       end
-    end,
-  })
-
-  -- Autocommand LspDetach
-  vim.api.nvim_create_autocmd("LspDetach", {
-    group = vim.api.nvim_create_augroup("rvim-lsp-detach", {}),
-    callback = function(event)
-      vim.lsp.buf.clear_references()
-      vim.api.nvim_clear_autocmds({
-        group = "rvim-lsp-detach",
-        buffer = event.buf,
-      })
+      -- Using the after local function
+      map("gra", vim.lsp.buf.code_action, "[G]oto Code [A]ction")
+      map("grr", vim.lsp.buf.references, "[G]oto [R]eferences")
+      map("gri", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+      map("grd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+      map("grD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+      map("gO", vim.lsp.buf.document_symbol, "Open Document Symbols")
+      map("gW", vim.lsp.buf.workspace_symbol, "Open Workspace Symbols")
+      map("grt", vim.lsp.buf.type_definition, "[G]oto [T]ype Definition")
+      map("K", vim.lsp.buf.hover, "Open Hover")
+      map("gK", vim.lsp.buf.signature_help, "Open Signature Help")
     end,
   })
 end
