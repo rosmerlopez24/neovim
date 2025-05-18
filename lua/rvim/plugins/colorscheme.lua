@@ -163,25 +163,6 @@ return {
   },
 
   -- For more information visit this Repo
-  -- https://github.com/uloco/bluloco.nvim
-  {
-    "uloco/bluloco.nvim",
-    name = "bluloco",
-    lazy = rvim.config.colorscheme ~= "bluloco",
-    priority = 1000,
-    dependencies = { "rktjmp/lush.nvim" },
-    config = function()
-      require("bluloco").setup({
-        style = rvim.config.style, -- "auto" | "dark" | "light"
-        transparent = false,
-        italics = false,
-        terminal = vim.fn.has("gui_running") == 1, -- bluoco colors are enabled in gui terminals per default.
-        guicursor = true,
-      })
-    end,
-  },
-
-  -- For more information visit this Repo
   -- https://github.com/rose-pine/neovim
   {
     "rose-pine/neovim",
@@ -252,6 +233,27 @@ return {
         background = true, -- use background color for virtual text
       },
     },
+  },
+
+  -- This is a port of the popular Visual Studio Code Themes Bluloco Light and Bluloco Dark
+  -- https://github.com/uloco/bluloco.nvim
+  {
+    "uloco/bluloco.nvim",
+    name = "bluloco",
+    lazy = rvim.config.colorscheme ~= "bluloco",
+    priority = 1000,
+    dependencies = { "rktjmp/lush.nvim" },
+    opts = {
+      style = rvim.config.style,
+      transparent = false,
+      italics = false,
+      terminal = vim.fn.has("gui_running") == 1,
+      guicursor = true,
+      rainbow_headings = false,
+    },
+    config = function(_, opts)
+      require("bluloco").setup(opts)
+    end,
   },
 
   -- NeoVim dark colorscheme inspired by the colors of the famous painting by Katsushika Hokusai.
